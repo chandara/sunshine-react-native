@@ -2,18 +2,19 @@ import React from 'react';
 import { View, Text, Image } from 'react-native';
 
 const ForecastWeatherItem = (props) => {
-    const { mainContainer, icon, forecastContainer, temperatureContainer } = styles;
+    const { mainContainer, icon, forecastContainer, temperatureContainer,
+    dayText, maxTemperatureText, minTemperatureText } = styles;
     
     return (
         <View style={mainContainer}>
-            <Image style={icon} source={require('../images/ic_logo.png')} />
+            <Image style={icon} source={{ uri: 'http://openweathermap.org/img/w/' + props.weather.weather[0].icon + '.png' }} />
             <View style={forecastContainer}>
-                <Text>Tomorrow</Text>
-                <Text>{props.weather.weather.main}</Text>
+                <Text style={dayText}>Tomorrow</Text>
+                <Text>{props.weather.weather[0].main}</Text>
             </View>
             <View style={temperatureContainer}>
-                <Text>{props.weather.main.temp_max}</Text>
-                <Text>{props.weather.main.temp_min}</Text>
+                <Text style={maxTemperatureText}>{`${props.weather.main.temp_max}\u00B0`}</Text>
+                <Text style={minTemperatureText}>{`${props.weather.main.temp_min}\u00B0`}</Text>
             </View>
         </View>
     );
@@ -22,17 +23,28 @@ const ForecastWeatherItem = (props) => {
 
 const styles = {
     mainContainer: {
-        flex: 1,
         flexDirection: 'row',
     },
     icon: {
-        flex: 1,
+        width: 50,
+        height: 50,
     },
     forecastContainer: {
-        flex: 3,
+        flexDirection: 'column',
+    },
+    dayText: {
+        fontSize: 20,
     },
     temperatureContainer: {
-        flex: 1,
+        position: 'absolute',
+        right: 30,
+        alignItems: 'center',
+    },
+    maxTemperatureText: {
+        fontSize: 20,
+    },
+    minTemperatureText: {
+        fontSize: 14,
     },
 };
 

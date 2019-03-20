@@ -20,7 +20,8 @@ export default class TodayWeather extends Component {
 
     render() {
         const { mainContainer, leftContainer, rightContainer, todayDateText, 
-            todayMaxTemperatureText, todayMinTemperatureText, todayLocation, todayWeatherStatusText } = styles;
+            todayMaxTemperatureText, todayMinTemperatureText, todayLocation, 
+            todayWeatherStatusText, todayTemperatureContainer } = styles;
         
         if (this.state.loading) {
             return (
@@ -33,15 +34,15 @@ export default class TodayWeather extends Component {
             <View style={mainContainer}>
                 <View style={leftContainer}>
                     <Text style={todayDateText}>Thursday, April 20</Text>
-                    <View>
+                    <View style={todayTemperatureContainer}>
                         <Text style={todayMaxTemperatureText}>{`${this.state.weather.main.temp_max}\u00B0`}</Text>
                         <Text style={todayMinTemperatureText}>{`${this.state.weather.main.temp_min}\u00B0`}</Text>
                     </View>
                     <Text style={todayLocation}>{this.state.weather.name}, UK</Text>
                 </View>
                 <View style={rightContainer}>
-                    <Image source={require('../images/ic_clear.png')} />
-                    <Text style={todayWeatherStatusText}>Clear</Text>
+                    <Image style={{width: 100, height: 100}} source={{ uri: 'http://openweathermap.org/img/w/' + this.state.weather.weather[0].icon + '.png' }} />
+                    <Text style={todayWeatherStatusText}>{this.state.weather.weather[0].main}</Text>
                 </View>
             </View>
         );
@@ -50,50 +51,48 @@ export default class TodayWeather extends Component {
 
 const styles = {
     mainContainer: {
-        flex: 1,
         flexDirection: 'row',
+        height: 300,
     },
     leftContainer: {
         backgroundColor: '#03A9F4',
         justifyContent: 'center',
-        flex: 2,
-        height: 300,
-        paddingLeft: 40,
         alignItems: 'center',
+        flex: 2,
+        flexDirection: 'column',
+        height: 300,
     },
     rightContainer: {
         backgroundColor: '#03A9F4',
         flex: 1,
         height: 300,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     todayDateText: {
         color: '#FFF',
-        fontSize: 28,
+        fontSize: 24,
     },
     todayTemperatureContainer: {
         flexDirection: 'row',
     },
     todayMaxTemperatureText: {
         color: '#FFF',
-        fontSize: 80,
-        marginTop: 20,
-        marginBottom: 20,
+        fontSize: 60,
     },
     todayMinTemperatureText: {
         color: '#FFF',
-        fontSize: 28,
-        marginTop: 20,
-        marginBottom: 20,
+        fontSize: 24,
     },
     todayLocation: {
         color: '#FFF',
-        fontSize: 28,
+        fontSize: 24,
     },
     todayWeatherImage: {
     },
     todayWeatherStatusText: {
         color: '#FFF',
-        fontSize: 28,
+        fontSize: 24,
         position: 'absolute',
         bottom: 20,
     }

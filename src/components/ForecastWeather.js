@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ActivityIndicator } from 'react-native';
+import { View, ActivityIndicator, Text } from 'react-native';
 import ForecastWeatherItem from './ForecastWeatherItem';
 import axios from 'axios';
 
@@ -20,10 +20,12 @@ export default class TodayWeather extends Component {
     }
 
     renderWeatherList() {
-        this.state.weathers.map(weather => <ForecastWeatherItem weather={weather} />);
+        return this.state.weathers.map(weather => <ForecastWeatherItem key={weather.weather[0].id} weather={weather} />);
     }
 
     render() {
+        const { weatherListContainer } = styles;
+
         if (this.state.loading) {
             return (
                 <ActivityIndicator size="large" color="#03A9F4" />
@@ -31,9 +33,15 @@ export default class TodayWeather extends Component {
         }
 
         return (
-            <View>
+            <View style={weatherListContainer}>
                 {this.renderWeatherList()}
             </View>
         );
     }
 }
+
+const styles = {
+    weatherListContainer: {
+        flex: 1,
+    }
+};

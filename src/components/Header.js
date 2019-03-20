@@ -18,11 +18,11 @@ const Header = () => {
 const styles = StyleSheet.create({
     headerContainer: {
         backgroundColor: '#03A9F4',
-        height: 60,
-        paddingTop: 20,
         justifyContent: 'center',
         alignItems: 'center',
         fontSize: 20,
+        paddingTop: 20,
+        height: 60,
     },
 });
 
