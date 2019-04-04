@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ActivityIndicator, Text } from 'react-native';
+import { View, ActivityIndicator, FlatList } from 'react-native';
 import ForecastWeatherItem from './ForecastWeatherItem';
 import axios from 'axios';
 
@@ -8,7 +8,7 @@ export default class TodayWeather extends Component {
     state = { loading: true,
         weathers: [] };
 
-    componentWillMount() {
+    componentDidMount() {
         axios.get('https://api.openweathermap.org/data/2.5/forecast?q=London,uk&units=metric&APPID=c92fa45d89678eeb650bfe7d57c9ce78')
         .then((response) => {
             console.log(response.data);
@@ -17,10 +17,6 @@ export default class TodayWeather extends Component {
                 weathers: response.data.list,
                 });
         });
-    }
-
-    renderWeatherList() {
-        return this.state.weathers.map(weather => <ForecastWeatherItem key={weather.weather[0].id} weather={weather} />);
     }
 
     render() {
@@ -34,7 +30,15 @@ export default class TodayWeather extends Component {
 
         return (
             <View style={weatherListContainer}>
-                {this.renderWeatherList()}
+                <FlatList 
+                    data={this.state.weathers}
+                    renderItem={item => 
+                    <ForecastWeatherItem 
+                        key={item.item.weather[0].id} 
+                        weather={item.item} 
+                        onPressItem={() => this.props.onPressItem(this.props.weather)}
+                    />}
+                />
             </View>
         );
     }
